@@ -21,5 +21,21 @@
   </div>
 </nav>
 
-<h2>Add</h2>
-<input type="text">
+<main class="row col-12 m-0 p-0">
+  <!-- Left side -->
+  <section class="col-6 left-side">
+    <h2>Add</h2>
+    <input type="text" class="form-control col-1" [(ngModel)]="courseName">
+    <button (click)="addCourse()" class="btn btn-primary">Add</button>
+    <ul [innerHTML]="newCourse">
+    </ul>
+  </section>
+
+  <!-- Right side -->
+  <section class="col-6">
+
+  </section>
+</main>
+
+
+
