@@ -6,3 +6,22 @@ main {
 .left-side {
   background-color: #C0C0C0;
 }
+
+#add-course-label {
+  font-size: x-large;
+  font-weight:bold
+}
+
+#add-course-div {
+  background-color: #A9A9A9;
+}
+
+.new-course-article {
+  background-color: #b0b0b0;
+  border: 1px;
+}
+
+.added-course-label {
+  font-weight: bold;
+  font-size: large;
+}

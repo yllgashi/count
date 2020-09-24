@@ -29,7 +29,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">@</div>
             </div>
-            <input type="text" [(ngModel)]="loginUsername" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username" />
+            <input type="text" [(ngModel)]="loginUsername" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username" (keyup.enter)="navigateToHome()"/>
           </div>
           <br />
 
@@ -38,7 +38,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">*</div>
             </div>
-            <input type="password" [(ngModel)]="loginPassword" class="form-control" id="inlineFormInputGroupUsername" placeholder="Password" />
+            <input type="password" [(ngModel)]="loginPassword" class="form-control" id="inlineFormInputGroupUsername" placeholder="Password" (keyup.enter)="navigateToHome()"/>
           </div>
           <br />
 
@@ -85,7 +85,7 @@
           <br />
 
           <div class="row justify-content-center">
-            <button type="button" class="btn btn-dark btn-sm">Sign Up</button>
+            <button type="button" class="btn btn-dark btn-sm" routerLink="/home">Sign Up</button>
           </div>
         </div>
       </div>

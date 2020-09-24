@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand"  routerLink="/home" routerLinkActive="active">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -22,18 +22,28 @@
 </nav>
 
 <main class="row col-12 m-0 p-0">
-  <!-- Left side -->
-  <section class="col-6 left-side">
-    <h2>Add</h2>
-    <input type="text" class="form-control col-1" [(ngModel)]="courseName">
-    <button (click)="addCourse()" class="btn btn-primary">Add</button>
-    <ul [innerHTML]="newCourse">
-    </ul>
+  <!-- left side -->
+  <section class="col-4 left-side">
+    <div class="row justify-content-center py-2" id="add-course-div">
+      <label id="add-course-label">Add</label>
+      <input type="text" class="form-control col-5 mx-2 h-25" [(ngModel)]="courseName" (keyup.enter)="addCourse()">
+      <button (click)="addCourse()" class="btn btn-success h-25">Add</button>
+    </div>
+
+<!-- new courses -->
+  <article class="row new-course-article my-2 p-3" *ngFor="let ci of courseList" [id]="ci.title">
+    <label class="added-course-label mr-3">{{ ci.title }}</label>
+    <span class="btn btn-sm btn-outline-success mx-1" (click)="startCourseCountDown(ci)">start</span>
+    <span class="btn btn-sm btn-outline-warning mx-1" (click)="pauseCourseCountDown(ci)">pause</span>
+    <span class="btn btn-sm btn-outline-danger mx-1" (click)="deleteCourse(ci)">x</span>
+    <span class="m-1">{{ ci.totalCountDown }}</span>
+  </article>
+<!--  -->
+
   </section>
 
-  <!-- Right side -->
+  <!-- right side -->
   <section class="col-6">
-
   </section>
 </main>
 
