@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
   loginUsername;
   loginPassword;
   loginRouterLink = "";
+  incorrectUsernameOrPass = false;
 
   constructor(private _router: Router) { }
 
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
       this._router.navigateByUrl('/home');
     }
     else {
-      alert("Incorrect! Try Again.");
+      this.incorrectUsernameOrPass = true;
     }
   }
 
