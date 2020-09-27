@@ -1,16 +1,13 @@
 main {
-  background-color: #E9ECEF;
+  /* background-color:LightGray; */
   height: 100vh;
 }
 
-.left-side {
-  background-color: #C0C0C0;
+.adding-new-course-input {
+  /* background-color: LightGray; */
+  z-index: 0;
 }
 
-#add-course-label {
-  font-size: x-large;
-  font-weight:bold
-}
 
 #add-course-div {
   background-color: #A9A9A9;
@@ -24,4 +21,75 @@ main {
 .added-course-label {
   font-weight: bold;
   font-size: large;
+}
+
+
+/*  */
+
+.sidenav {
+  height: 100vh;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: Tomato;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  text-align:center;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover{
+  opacity: 0.3;
+}
+
+.sidenav #profile-pic {
+  display: block;
+  border-radius: 40%;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#open-nav-span {
+  font-size:30px;
+  width: 5vw;
+  text-align: center;
+  cursor:pointer;
+  background-color: Tomato;
+  color: white;
+  overflow: hidden;
+}
+
+#add-course-input {
+  background-color: Tomato;
+   border: 0;
+}
+
+::placeholder {
+  color: white;
+}
+
+.start-pause-logo-span {
+  z-index: 10 !important;
+  position: relative;
+}
+
+.start-pause-logo-img {
+  z-index: 0 !important;
 }

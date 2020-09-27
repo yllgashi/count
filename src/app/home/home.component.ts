@@ -11,24 +11,73 @@ import { SubjectModel } from 'src/models/subject.model';
 export class HomeComponent implements OnInit {
   courseName: string;
   courseList: SubjectModel[] = [];
+  mySidenav = "width:0%";
+  importanceStatesCounter = 0;
+  ImportanceStates: string = "Unimportant";
+  ImportanceStatesClass = "btn btn-primary";
+  cardClass = "card text-white bg-primary mb-3 d-inline-block m-2";
+  playOrPause = true;
 
   constructor() { }
+
 
   ngOnInit(): void {
   }
 
+  openNav() {
+    this.mySidenav = "width:30%";
+  }
+
+  closeNav() {
+    this.mySidenav = "width:0%";
+  }
+
   // add course in courseList (this will show course on viewport)
   addCourse() {
+    this.courseName = this.courseName.trim();
     let existing = this.courseList.find(x => x.title == this.courseName.trim());
 
     if (existing) {
       alert('Exists');
     }
+    else if(this.courseName == '') {
+      alert('Null');
+    }
     else {
-      let course = new SubjectModel(this.courseName);
+      let course = new SubjectModel(this.courseName, this.ImportanceStates);
       this.courseList.push(course);
       this.courseName = '';
     }
+  }
+
+  addCardClass(importannce) {
+    if(importannce == "Unimportant") {
+      return "card text-white bg-primary mb-3 d-inline-block m-2"
+    }
+    else if(importannce == "Very useful") {
+      return "card text-white bg-warning mb-3 d-inline-block m-2";
+    }
+    else if(importannce == "Fundamental") {
+      return "card text-white bg-danger mb-3 d-inline-block m-2"
+    }
+  }
+
+  changeImportanceOfCourse() {
+    this.importanceStatesCounter++;
+    if(this.importanceStatesCounter == 0) {
+      this.ImportanceStates = "Unimportant"
+      this.ImportanceStatesClass = "btn btn-primary";
+    }
+    else if(this.importanceStatesCounter == 1) {
+      this.ImportanceStates = "Very useful"
+      this.ImportanceStatesClass = "btn btn-warning";
+    }
+    else if(this.importanceStatesCounter == 2) {
+      this.importanceStatesCounter = -1;
+      this.ImportanceStates = "Fundamental"
+      this.ImportanceStatesClass = "btn btn-danger";
+    }
+
   }
 
   // start course learning time
@@ -57,15 +106,30 @@ export class HomeComponent implements OnInit {
       if(courseObject.startOrPause == false) {
         return 0;  // Bohet return veq shkaku qe me mbaru metoda
       }
-      else if(courseObject.seconds == 59)
-      {
-        courseObject.minutes++;
-        courseObject.seconds = 0;
-      }
-      else {
+
+      if(courseObject.seconds < 60) {
         courseObject.seconds++;
       }
-      courseObject.totalCountDown = courseObject.minutes.toString() + ' : ' + courseObject.seconds.toString();
+
+      if(courseObject.seconds == 59 && courseObject.minutes < 60) {
+      courseObject.minutes++;
+      courseObject.seconds = 0;
+      }
+
+      if(courseObject.hours < 24 && courseObject.minutes == 59 && courseObject.seconds == 59) {
+        courseObject.hours++;
+        courseObject.minutes = 0;
+        courseObject.seconds = 0;
+      }
+
+      if(courseObject.hours == 23 && courseObject.minutes == 59 && courseObject.seconds == 59) {
+        courseObject.days++;
+        courseObject.hours = 0;
+        courseObject.minutes = 0;
+        courseObject.seconds = 0;
+      }
+      courseObject.totalCountDown = courseObject.days.toString() + 'days, ' + courseObject.hours.toString()
+      + 'h, ' + courseObject.minutes + 'min, ' + courseObject.seconds + 'sec';
     });
   }
 }

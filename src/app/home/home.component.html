@@ -1,50 +1,55 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand"  routerLink="/home" routerLinkActive="active">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Explore<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Statistics</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink=''>Log Out</a>
-      </li>
-    </ul>
-    <span class="navbar-text">
-      Count
-    </span>
-  </div>
-</nav>
+<main class="row col-12 m-0 p-0 overflow-scroll">
+  <!-- nav -->
+  <nav id="mySidenav" class="sidenav" [style]="mySidenav">
+    <a class="closebtn" (click)="closeNav();">&times;</a>
+    <div class="justify-content-center"><img src="../../assets/profile-pic-home.jpg" id="profile-pic" class="w-25 mx-auto"></div>
+    <a>My Courses</a>
+    <a>My Stats</a>
+    <a>Settings</a>
+    <a>Log Out</a>
+  </nav>
+  <span id="open-nav-span" (click)="openNav();" class="">&#9776;</span>
 
-<main class="row col-12 m-0 p-0">
-  <!-- left side -->
-  <section class="col-4 left-side">
-    <div class="row justify-content-center py-2" id="add-course-div">
-      <label id="add-course-label">Add</label>
-      <input type="text" class="form-control col-5 mx-2 h-25" [(ngModel)]="courseName" (keyup.enter)="addCourse()">
-      <button (click)="addCourse()" class="btn btn-success h-25">Add</button>
+
+
+  <section class="col-11 adding-new-course-input mt-1 mx-1 h-auto">
+    <!-- input for adding new course -->
+    <div class="col-12 input-group input-group-lg row justify-content-start">
+      <div class="input-group-prepend">
+        <button data-micron="fade" data-micron-duration=".40" [class]="ImportanceStatesClass" (click)="changeImportanceOfCourse()" type="button">{{ ImportanceStates }}</button>
+      </div>
+      <input type="text" id="add-course-input"  [(ngModel)]="courseName" (keyup.enter)="addCourse()" class="form-control col-12" placeholder="Add a course...">
+      <div class="input-group-prepend">
+        <button  data-micron="pop" data-micron-duration=".40" class="btn btn-dark" type="button" (click)="addCourse()"><img src="../../assets/plus-circle.svg"></button>
+      </div>
     </div>
 
-<!-- new courses -->
-  <article class="row new-course-article my-2 p-3" *ngFor="let ci of courseList" [id]="ci.title">
-    <label class="added-course-label mr-3">{{ ci.title }}</label>
-    <span class="btn btn-sm btn-outline-success mx-1" (click)="startCourseCountDown(ci)">start</span>
-    <span class="btn btn-sm btn-outline-warning mx-1" (click)="pauseCourseCountDown(ci)">pause</span>
-    <span class="btn btn-sm btn-outline-danger mx-1" (click)="deleteCourse(ci)">x</span>
-    <span class="m-1">{{ ci.totalCountDown }}</span>
-  </article>
-<!--  -->
+    <!-- new courses -->
+    <div *ngFor="let ci of courseList"
+    [class]="addCardClass(ci.importance)" style="max-width: 18rem;">
+      <div class="card-header">
+        <h5 class="card-title d-inline">{{ ci.title }}</h5>
+        <span class="badge badge-pill badge-light mx-1">{{ ci.importance }}</span>
+        <img src="../../assets/x-circle-fill.svg" class="float-right" (click)="deleteCourse(ci)">
+      </div>
+      <div class="card-body">
+        <ul class="card-text" contenteditable="true">
+          <li>{{ ci.firstDescription }}</li>
+          <li>{{ ci.secondDescription }}</li>
+          <li>{{ ci.thirdDescription }}</li>
+        </ul>
+        <hr>
+        <!-- start, pause, and time -->
+
+        <img *ngIf="!ci.startOrPause; else pause" (click)="startCourseCountDown(ci)" src="../../assets/play-test.svg" class="start-pause-logo-img mx-1">
+        <ng-template #pause><img (click)="pauseCourseCountDown(ci)" src="../../assets/pause-test.svg" class="start-pause-logo-img mx-1"></ng-template>
+        <span class="m-1 d-block">{{ ci.totalCountDown }}</span>
+      </div>
+    </div>
 
   </section>
 
-  <!-- right side -->
-  <section class="col-6">
-  </section>
+
 </main>
 
 
