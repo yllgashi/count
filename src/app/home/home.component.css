@@ -33,7 +33,7 @@ main {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: Tomato;
+  background-color: #23272B;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -71,19 +71,12 @@ main {
   width: 5vw;
   text-align: center;
   cursor:pointer;
-  background-color: Tomato;
+  background-color: #23272B;
   color: white;
   overflow: hidden;
 }
 
-#add-course-input {
-  background-color: Tomato;
-   border: 0;
-}
 
-::placeholder {
-  color: white;
-}
 
 .start-pause-logo-span {
   z-index: 10 !important;

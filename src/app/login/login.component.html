@@ -8,8 +8,8 @@
     <input type="password" [(ngModel)]="loginPassword" class="form-control login-inputs col-7" id="inlineFormInputGroupUsername" placeholder="Password" (keyup.enter)="navigateToHome()"/>
     <br><br>
     <div class="row col-12 align-content-center justify-content-center">
-      <button type="button" class="btn btn-info mr-2">Register</button>
-      <button type="button" class="btn btn-success ml-2" (click)="navigateToHome()">Log In</button>
+      <button type="button" class="btn btn-light mr-2">Register</button>
+      <button type="button" class="btn btn-dark ml-2" (click)="navigateToHome()">Log In</button>
     </div>
     <p *ngIf="incorrectUsernameOrPass;" class="font-italic font-weight-lighter text-warning">Username or password is incorrect</p>
   </section>

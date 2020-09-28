@@ -1,10 +1,9 @@
 main {
-  background-color: SlateBlue;
   height: 100vh;
 }
 
 .log-in {
-  background-color: Tomato;
+  background-color: #23272B;
   border-radius: 2em 6em 2em 6em / 4em 2em 4em 2em;
   border: 2px;
 }

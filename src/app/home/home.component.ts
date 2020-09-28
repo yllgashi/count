@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   mySidenav = "width:0%";
   importanceStatesCounter = 0;
   ImportanceStates: string = "Unimportant";
-  ImportanceStatesClass = "btn btn-primary";
+  ImportanceStatesClass = "btn btn-secondary";
   cardClass = "card text-white bg-primary mb-3 d-inline-block m-2";
   playOrPause = true;
 
@@ -30,6 +30,15 @@ export class HomeComponent implements OnInit {
 
   closeNav() {
     this.mySidenav = "width:0%";
+  }
+
+  changeImportanceBadge(importance) {
+    if(importance == "Unimportant")
+      return "badge badge-pill badge-primary mx-1";
+    else if(importance == "Very useful")
+      return "badge badge-pill badge-warning mx-1"
+    else if(importance == "Fundamental")
+      return "badge badge-pill badge-dark mx-1"
   }
 
   // add course in courseList (this will show course on viewport)
@@ -52,10 +61,10 @@ export class HomeComponent implements OnInit {
 
   addCardClass(importannce) {
     if(importannce == "Unimportant") {
-      return "card text-white bg-primary mb-3 d-inline-block m-2"
+      return "card text-white bg-secondary mb-3 d-inline-block m-2"
     }
     else if(importannce == "Very useful") {
-      return "card text-white bg-warning mb-3 d-inline-block m-2";
+      return "card text-white bg-dark mb-3 d-inline-block m-2";
     }
     else if(importannce == "Fundamental") {
       return "card text-white bg-danger mb-3 d-inline-block m-2"
@@ -66,11 +75,11 @@ export class HomeComponent implements OnInit {
     this.importanceStatesCounter++;
     if(this.importanceStatesCounter == 0) {
       this.ImportanceStates = "Unimportant"
-      this.ImportanceStatesClass = "btn btn-primary";
+      this.ImportanceStatesClass = "btn btn-secondary";
     }
     else if(this.importanceStatesCounter == 1) {
       this.ImportanceStates = "Very useful"
-      this.ImportanceStatesClass = "btn btn-warning";
+      this.ImportanceStatesClass = "btn btn-dark";
     }
     else if(this.importanceStatesCounter == 2) {
       this.importanceStatesCounter = -1;

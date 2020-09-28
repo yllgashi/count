@@ -3,8 +3,8 @@
   <nav id="mySidenav" class="sidenav" [style]="mySidenav">
     <a class="closebtn" (click)="closeNav();">&times;</a>
     <div class="justify-content-center"><img src="../../assets/profile-pic-home.jpg" id="profile-pic" class="w-25 mx-auto"></div>
-    <a>My Courses</a>
-    <a>My Stats</a>
+    <a>Count</a>
+    <a>Tasks</a>
     <a>Settings</a>
     <a>Log Out</a>
   </nav>
@@ -18,7 +18,7 @@
       <div class="input-group-prepend">
         <button data-micron="fade" data-micron-duration=".40" [class]="ImportanceStatesClass" (click)="changeImportanceOfCourse()" type="button">{{ ImportanceStates }}</button>
       </div>
-      <input type="text" id="add-course-input"  [(ngModel)]="courseName" (keyup.enter)="addCourse()" class="form-control col-12" placeholder="Add a course...">
+      <input type="text" id="add-course-input"  [(ngModel)]="courseName" (keyup.enter)="addCourse()" class="form-control col-12" placeholder="Add a course..." maxlength="14">
       <div class="input-group-prepend">
         <button  data-micron="pop" data-micron-duration=".40" class="btn btn-dark" type="button" (click)="addCourse()"><img src="../../assets/plus-circle.svg"></button>
       </div>
@@ -29,7 +29,7 @@
     [class]="addCardClass(ci.importance)" style="max-width: 18rem;">
       <div class="card-header">
         <h5 class="card-title d-inline">{{ ci.title }}</h5>
-        <span class="badge badge-pill badge-light mx-1">{{ ci.importance }}</span>
+        <span [class]="changeImportanceBadge(ci.importance)">{{ ci.importance }}</span>
         <img src="../../assets/x-circle-fill.svg" class="float-right" (click)="deleteCourse(ci)">
       </div>
       <div class="card-body">
