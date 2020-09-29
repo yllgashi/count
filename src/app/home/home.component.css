@@ -3,12 +3,6 @@ main {
   height: 100vh;
 }
 
-.adding-new-course-input {
-  /* background-color: LightGray; */
-  z-index: 0;
-}
-
-
 #add-course-div {
   background-color: #A9A9A9;
 }

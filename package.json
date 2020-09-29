@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "bootstrap": "^4.4.0",
     "jquery": "^3.5.1",
+    "popper": "^1.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "webkul-micron": "^1.1.6",

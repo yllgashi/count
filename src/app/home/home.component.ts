@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Subject, timer } from "rxjs";
 import { SubjectModel } from 'src/models/subject.model';
 
@@ -12,11 +13,12 @@ export class HomeComponent implements OnInit {
   courseName: string;
   courseList: SubjectModel[] = [];
   mySidenav = "width:0%";
-  importanceStatesCounter = 0;
-  ImportanceStates: string = "Unimportant";
-  ImportanceStatesClass = "btn btn-secondary";
+  importanceStatesCounterForFindInput = 0;
+  ImportanceStatesForFindInput: string = "All";
+  ImportanceStatesClassForFindInput = "btn btn-secondary";
   cardClass = "card text-white bg-primary mb-3 d-inline-block m-2";
-  playOrPause = true;
+  selectedImportanceForAddingCourse: string = "Choose...";
+  incorrectCourse = false;
 
   constructor() { }
 
@@ -46,22 +48,26 @@ export class HomeComponent implements OnInit {
     this.courseName = this.courseName.trim();
     let existing = this.courseList.find(x => x.title == this.courseName.trim());
 
-    if (existing) {
-      alert('Exists');
-    }
-    else if(this.courseName == '') {
-      alert('Null');
+    if (existing || this.courseName == '' || this.selectedImportanceForAddingCourse == "Choose...") {
+      // If coursename is valid and there is not an importance selected
+      // user will know that there is a mistake
+      this.incorrectCourse = true;
     }
     else {
-      let course = new SubjectModel(this.courseName, this.ImportanceStates);
+      let course = new SubjectModel(this.courseName, this.selectedImportanceForAddingCourse);
       this.courseList.push(course);
       this.courseName = '';
     }
   }
 
+  closeModal() {
+    this.selectedImportanceForAddingCourse = 'Choose...';
+    this.incorrectCourse = false;
+  }
+
   addCardClass(importannce) {
     if(importannce == "Unimportant") {
-      return "card text-white bg-secondary mb-3 d-inline-block m-2"
+      return "card text-white bg-dark mb-3 d-inline-block m-2"
     }
     else if(importannce == "Very useful") {
       return "card text-white bg-dark mb-3 d-inline-block m-2";
@@ -72,19 +78,23 @@ export class HomeComponent implements OnInit {
   }
 
   changeImportanceOfCourse() {
-    this.importanceStatesCounter++;
-    if(this.importanceStatesCounter == 0) {
-      this.ImportanceStates = "Unimportant"
-      this.ImportanceStatesClass = "btn btn-secondary";
+    this.importanceStatesCounterForFindInput++;
+    if(this.importanceStatesCounterForFindInput == 0) {
+      this.ImportanceStatesForFindInput = "All"
+      this.ImportanceStatesClassForFindInput = "btn btn-secondary";
     }
-    else if(this.importanceStatesCounter == 1) {
-      this.ImportanceStates = "Very useful"
-      this.ImportanceStatesClass = "btn btn-dark";
+    else if(this.importanceStatesCounterForFindInput == 1) {
+      this.ImportanceStatesForFindInput = "Unimportant"
+      this.ImportanceStatesClassForFindInput = "btn btn-primary";
     }
-    else if(this.importanceStatesCounter == 2) {
-      this.importanceStatesCounter = -1;
-      this.ImportanceStates = "Fundamental"
-      this.ImportanceStatesClass = "btn btn-danger";
+    else if(this.importanceStatesCounterForFindInput == 2) {
+      this.ImportanceStatesForFindInput = "Very useful"
+      this.ImportanceStatesClassForFindInput = "btn btn-warning";
+    }
+    else if(this.importanceStatesCounterForFindInput == 3) {
+      this.importanceStatesCounterForFindInput = -1;
+      this.ImportanceStatesForFindInput = "Fundamental"
+      this.ImportanceStatesClassForFindInput = "btn btn-danger";
     }
 
   }
