@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private _router: Router) { }
 
   ngOnInit(): void {
+    alert("Username: admin \nPassword: admin");
   }
 
   navigateToHome() {
