@@ -7,9 +7,7 @@ export class SubjectModel {
   totalCountDown: string = "0days, 0h, 0min, 0sec";
   importance: string;
   startOrPause: boolean;
-  firstDescription: string = "....";
-  secondDescription: string = "...";
-  thirdDescription: string = "..";
+  description: string = 'About this course...';
 
   constructor(title, importance) {
     this.title = title;

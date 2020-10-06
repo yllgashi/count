@@ -14,11 +14,14 @@ export class HomeComponent implements OnInit {
   courseList: SubjectModel[] = [];
   mySidenav = "width:0%";
   importanceStatesCounterForFindInput = 0;
-  ImportanceStatesForFindInput: string = "All";
-  ImportanceStatesClassForFindInput = "btn btn-secondary";
+  importanceStatesForFindInput: string = "All";
+  importanceStatesClassForFindInput = "btn btn-secondary";
   cardClass = "card text-white bg-primary mb-3 d-inline-block m-2";
   selectedImportanceForAddingCourse: string = "Choose...";
   incorrectCourse = false;
+  findOrNo = false;
+  findCourseList: SubjectModel[] = [];
+  findCourseInput;
 
   constructor() { }
 
@@ -77,26 +80,54 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  changeImportanceOfCourse() {
+  changeImportanceOfCourseAndFindFromImportance() {
     this.importanceStatesCounterForFindInput++;
     if(this.importanceStatesCounterForFindInput == 0) {
-      this.ImportanceStatesForFindInput = "All"
-      this.ImportanceStatesClassForFindInput = "btn btn-secondary";
+      this.importanceStatesForFindInput = "All"
+      this.importanceStatesClassForFindInput = "btn btn-secondary";
+      this.findOrNo = false;
     }
     else if(this.importanceStatesCounterForFindInput == 1) {
-      this.ImportanceStatesForFindInput = "Unimportant"
-      this.ImportanceStatesClassForFindInput = "btn btn-primary";
+      this.importanceStatesForFindInput = "Unimportant"
+      this.importanceStatesClassForFindInput = "btn btn-primary";
+      this.findOrNo = true;
+      this.findCourseList = this.courseList.filter(x => x.importance == this.importanceStatesForFindInput);
     }
     else if(this.importanceStatesCounterForFindInput == 2) {
-      this.ImportanceStatesForFindInput = "Very useful"
-      this.ImportanceStatesClassForFindInput = "btn btn-warning";
+      this.importanceStatesForFindInput = "Very useful"
+      this.importanceStatesClassForFindInput = "btn btn-warning";
+      this.findOrNo = true;
+      this.findCourseList = this.courseList.filter(x => x.importance == this.importanceStatesForFindInput);
     }
     else if(this.importanceStatesCounterForFindInput == 3) {
       this.importanceStatesCounterForFindInput = -1;
-      this.ImportanceStatesForFindInput = "Fundamental"
-      this.ImportanceStatesClassForFindInput = "btn btn-danger";
+      this.importanceStatesForFindInput = "Fundamental"
+      this.importanceStatesClassForFindInput = "btn btn-danger";
+      this.findOrNo = true;
+      this.findCourseList = this.courseList.filter(x => x.importance == this.importanceStatesForFindInput);
     }
+  }
 
+  find(courseToFind, importance) {
+    if(this.findCourseInput == '') {
+      this.findOrNo = false;
+    }
+    else if(this.findCourseInput != '' && importance == "All") {
+      this.findOrNo = true;
+      this.findCourseList = this.courseList.filter(x => x.title == this.findCourseInput);
+    }
+    else if(this.findCourseInput != '' && importance == 'Unimportant') {
+      this.findOrNo = true;
+      this.findCourseList = this.courseList.filter(x => x.title == this.findCourseInput && x.importance == 'Unimportant');
+    }
+    else if(this.findCourseInput != '' && importance == 'Very useful') {
+      this.findOrNo = true;
+      this.findCourseList = this.courseList.filter(x => x.title == this.findCourseInput && x.importance == 'Very useful');
+    }
+    else if(this.findCourseInput != '' && importance == 'Fundamental') {
+      this.findOrNo = true;
+      this.findCourseList = this.courseList.filter(x => x.title == this.findCourseInput && x.importance == 'Fundamental');
+    }
   }
 
   // start course learning time
@@ -118,6 +149,13 @@ export class HomeComponent implements OnInit {
     let courseIndex = this.courseList.findIndex(x => x.title == courseObject.title);
     this.courseList.splice(courseIndex, 1);
   }
+
+  // add finded course in findCourseList[]
+  // findCourse(courseToFind) {
+  //   let course: SubjectModel = this.courseList.find(x => x.title == courseToFind);
+  //   this.findCourseList.push(course);
+  //   this.findOrNo = true;
+  // }
 
   // counting time for SubjectModel objects
   countingTime(courseObject: SubjectModel) {
