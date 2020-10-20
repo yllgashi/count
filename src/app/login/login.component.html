@@ -3,7 +3,8 @@
 
   <!-- login -->
   <section class="row col-4 align-content-center justify-content-center h-50 log-in">
-    <input type="text" [(ngModel)]="loginUsername" class="form-control login-inputs col-7" id="inlineFormInputGroupUsername" placeholder="Username" (keyup.enter)="navigateToHome()"/>
+    <button class="btn btn-light btn-lg" routerLink="/home" routerLinkActive="active">Continue</button>
+    <!-- <input type="text" [(ngModel)]="loginUsername" class="form-control login-inputs col-7" id="inlineFormInputGroupUsername" placeholder="Username" (keyup.enter)="navigateToHome()"/>
     <br><br>
     <input type="password" [(ngModel)]="loginPassword" class="form-control login-inputs col-7" id="inlineFormInputGroupUsername" placeholder="Password" (keyup.enter)="navigateToHome()"/>
     <br><br>
@@ -11,6 +12,6 @@
       <button type="button" class="btn btn-secondary mr-2">Register</button>
       <button type="button" class="btn btn-dark ml-2" (click)="navigateToHome()">Log In</button>
     </div>
-    <p *ngIf="incorrectUsernameOrPass;" class="font-italic font-weight-lighter text-danger">Username or password is incorrect</p>
+    <p *ngIf="incorrectUsernameOrPass;" class="font-italic font-weight-lighter text-danger">Username or password is incorrect</p> -->
   </section>
 </main>

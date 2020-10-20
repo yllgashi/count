@@ -10,18 +10,18 @@ import { SubjectModel } from 'src/models/subject.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  courseName: string;
-  courseList: SubjectModel[] = [];
-  mySidenav = "width:0%";
-  importanceStatesCounterForFindInput = 0;
-  importanceStatesForFindInput: string = "All";
-  importanceStatesClassForFindInput = "btn btn-secondary";
-  cardClass = "card text-white bg-primary mb-3 d-inline-block m-2";
-  selectedImportanceForAddingCourse: string = "Choose...";
-  incorrectCourse = false;
-  findOrNo = false;
-  findCourseList: SubjectModel[] = [];
-  findCourseInput;
+  courseName: string; // Course name to add in courseList
+  courseList: SubjectModel[] = []; // All courses
+  mySidenav = "width:0%"; // Side-nav style
+  importanceStatesCounterForFindInput = 0; // Count the clicks at find button
+  importanceStatesForFindInput: string = "All"; // Text in find button
+  importanceStatesClassForFindInput = "btn btn-secondary"; // Find button class
+  cardClass = "card text-white bg-primary mb-3 d-inline-block m-2"; // Courses card class
+  selectedImportanceForAddingCourse: string = "Choose..."; // Text in 'select' tag, at adding courses modal
+  incorrectCourse = false; // If is true, the warning span is shown at adding courses modal
+  findOrNo = false; // Tells which array of courses are shown in viewport, courseList[] or findCourseList[]
+  findCourseList: SubjectModel[] = []; // There are courses the client searched at find input
+  findCourseInput; // Find courses input
 
   constructor() { }
 
@@ -29,33 +29,36 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // For opening side-nav
   openNav() {
     this.mySidenav = "width:30%";
   }
 
+  // For closing side-nav
   closeNav() {
     this.mySidenav = "width:0%";
   }
 
+  // Change course badge class
   changeImportanceBadge(importance) {
-    if(importance == "Unimportant")
-      return "badge badge-pill badge-primary mx-1";
-    else if(importance == "Very useful")
-      return "badge badge-pill badge-warning mx-1"
-    else if(importance == "Fundamental")
-      return "badge badge-pill badge-dark mx-1"
+    if(importance == "Unimportant") return "badge badge-pill badge-primary mx-1";
+    else if(importance == "Very useful") return "badge badge-pill badge-warning mx-1"
+    else if(importance == "Fundamental") return "badge badge-pill badge-dark mx-1"
   }
 
-  // add course in courseList (this will show course on viewport)
+  // Add course in courseList (this will show course on viewport)
   addCourse() {
+    // Check if new course already exists
     this.courseName = this.courseName.trim();
-    let existing = this.courseList.find(x => x.title == this.courseName.trim());
+    let existing = this.courseList.find(x => x.title == this.courseName);
 
+    // If course already exists, or if name of course is null, or if user may have not choose the importance of course,
+    // course won't be added
     if (existing || this.courseName == '' || this.selectedImportanceForAddingCourse == "Choose...") {
-      // If coursename is valid and there is not an importance selected
-      // user will know that there is a mistake
+      // User will know that there is a mistake
       this.incorrectCourse = true;
     }
+    // Else add course, and show at viewport
     else {
       let course = new SubjectModel(this.courseName, this.selectedImportanceForAddingCourse);
       this.courseList.push(course);
@@ -63,24 +66,21 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // Prevent a mistake, and remove "incorrect course" warning span
   closeModal() {
     this.selectedImportanceForAddingCourse = 'Choose...';
     this.incorrectCourse = false;
   }
 
+  // Add card class based on importance of course
   addCardClass(importannce) {
-    if(importannce == "Unimportant") {
-      return "card text-white bg-dark mb-3 d-inline-block m-2"
-    }
-    else if(importannce == "Very useful") {
-      return "card text-white bg-dark mb-3 d-inline-block m-2";
-    }
-    else if(importannce == "Fundamental") {
-      return "card text-white bg-danger mb-3 d-inline-block m-2"
-    }
+    if(importannce == "Unimportant") return "card text-white bg-dark mb-3 d-inline-block m-2";
+    else if(importannce == "Very useful") return "card text-white bg-dark mb-3 d-inline-block m-2";
+    else if(importannce == "Fundamental") return "card text-white bg-danger mb-3 d-inline-block m-2";
   }
 
-  changeImportanceOfCourseAndFindFromImportance() {
+  // Change find button colors, and find courses based on importance
+  findBasedOnImportance() {
     this.importanceStatesCounterForFindInput++;
     if(this.importanceStatesCounterForFindInput == 0) {
       this.importanceStatesForFindInput = "All"
@@ -108,10 +108,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  find(courseToFind, importance) {
-    if(this.findCourseInput == '') {
-      this.findOrNo = false;
-    }
+  // Find course with search input
+  findCourseWithSearchInput(courseToFind, importance) {
+    // If client is not searching a course, don't show courses from findCourseList array
+    if(this.findCourseInput == '')  this.findOrNo = false;
+
     else if(this.findCourseInput != '' && importance == "All") {
       this.findOrNo = true;
       this.findCourseList = this.courseList.filter(x => x.title == this.findCourseInput);
@@ -130,61 +131,59 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // start course learning time
+  // Start course learning counter
   startCourseCountDown(courseObject: SubjectModel) {
-    courseObject.startOrPause = true; // Bohet true kur mat kohe ndersa bohet false kur don me stopu
+    // If user click play button, this attribute of courseObject becomes 'true'
+    // If user click pause button, this attribute of courseObject becomes 'false'
+    courseObject.startOrPause = true;
 
-    // Nese bohet start heren e par, se pastaj
-    if(courseObject.minutes == 0 && courseObject.seconds == 0)
-      this.countingTime(courseObject);
+    // If start counting time for the first time
+    if(courseObject.minutes == 0 && courseObject.seconds == 0) this.countingTime(courseObject);
   }
 
-  // pause course learning time
+  // Pause course learning counter
   pauseCourseCountDown(courseObject: SubjectModel) {
     courseObject.startOrPause = false;
   }
 
-  // delete course from courseList and from viewport
+  // Delete course from courseList and from viewport
   deleteCourse(courseObject: SubjectModel) {
+    // Find course, and delete
     let courseIndex = this.courseList.findIndex(x => x.title == courseObject.title);
     this.courseList.splice(courseIndex, 1);
   }
 
-  // add finded course in findCourseList[]
-  // findCourse(courseToFind) {
-  //   let course: SubjectModel = this.courseList.find(x => x.title == courseToFind);
-  //   this.findCourseList.push(course);
-  //   this.findOrNo = true;
-  // }
-
-  // counting time for SubjectModel objects
+  // Counting time method for all SubjectModel objects
   countingTime(courseObject: SubjectModel) {
     timer(0, 1000).subscribe(ellapsedCycles => {
-      if(courseObject.startOrPause == false) {
-        return 0;  // Bohet return veq shkaku qe me mbaru metoda
-      }
+      // Return 0, for ending method loop
+      if(courseObject.startOrPause == false) return 0;
 
-      if(courseObject.seconds < 60) {
-        courseObject.seconds++;
-      }
+      // If seconds are <60, continue to add seconds after 1000 milliseconds
+      if(courseObject.seconds < 60) courseObject.seconds++;
 
+      // If seconds are == 59, and if minutes are < 60, next second increment minutes
       if(courseObject.seconds == 59 && courseObject.minutes < 60) {
       courseObject.minutes++;
       courseObject.seconds = 0;
       }
 
-      if(courseObject.hours < 24 && courseObject.minutes == 59 && courseObject.seconds == 59) {
+      // If seconds are == 59, and if minutes are == 59, and if hours are <= 23, next second increment hours
+      if(courseObject.seconds == 59 && courseObject.minutes == 59 && courseObject.hours <= 23) {
         courseObject.hours++;
         courseObject.minutes = 0;
         courseObject.seconds = 0;
       }
 
-      if(courseObject.hours == 23 && courseObject.minutes == 59 && courseObject.seconds == 59) {
+      // If seconds are == 59, and if minutes are == 59, and if hours are == 23, next second increment days
+      if(courseObject.seconds == 59 && courseObject.minutes == 59 && courseObject.hours == 23) {
         courseObject.days++;
         courseObject.hours = 0;
         courseObject.minutes = 0;
         courseObject.seconds = 0;
       }
+
+      // Set totalCountDown time in string format
       courseObject.totalCountDown = courseObject.days.toString() + 'days, ' + courseObject.hours.toString()
       + 'h, ' + courseObject.minutes + 'min, ' + courseObject.seconds + 'sec';
     });

@@ -1,5 +1,5 @@
 <main class="row col-12 m-0 p-0 overflow-scroll">
-  <!-- nav -->
+  <!-- Side-nav -->
   <nav id="mySidenav" class="sidenav" [style]="mySidenav">
     <a class="closebtn" (click)="closeNav()">&times;</a>
     <div class="justify-content-center">
@@ -16,9 +16,9 @@
   </nav>
   <span id="open-nav-span" (click)="openNav()" class="">&#9776;</span>
 
-  <!-- input for finding courses, button for adding courses, and courses -->
+  <!-- Find courses input, button for adding courses, and courses -->
   <section class="col-11 mt-1 mx-1 h-auto">
-    <!-- add new course -->
+    <!-- Add new course button -->
     <button
       data-micron="swing"
       data-micron-duration=".40"
@@ -29,7 +29,7 @@
       +
     </button>
 
-    <!-- Modal -->
+    <!-- New course modal -->
     <div
       class="modal fade"
       id="new-course"
@@ -55,7 +55,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <!-- modal body -->
+            <!-- Modal body -->
             <label for="name" class="col-form-label">Course name:</label>
             <div class="input-group">
               <input
@@ -105,7 +105,7 @@
       </div>
     </div>
 
-    <!-- find courses -->
+    <!-- Find courses -->
     <div class="input-group mb-3 col-5 float-right mt-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">Find:</span>
@@ -113,7 +113,7 @@
       <input
         type="text"
         class="form-control"
-        (keyup)="find(findCourseInput, importanceStatesForFindInput)"
+        (keyup)="findCourseWithSearchInput(findCourseInput, importanceStatesForFindInput)"
         placeholder="Course name"
         aria-label="Course name"
         aria-describedby="basic-addon1"
@@ -124,7 +124,7 @@
           data-micron="fade"
           data-micron-duration=".40"
           [class]="importanceStatesClassForFindInput"
-          (click)="changeImportanceOfCourseAndFindFromImportance()"
+          (click)="findBasedOnImportance()"
           type="button"
         >
           {{ importanceStatesForFindInput }}
@@ -132,7 +132,7 @@
       </div>
     </div>
 
-    <!-- new courses -->
+    <!-- New courses -->
     <section class="row col-12" *ngIf="!findOrNo">
       <div
         *ngFor="let ci of courseList"
@@ -153,7 +153,7 @@
         <div class="card-body">
           <p contenteditable="true">{{ ci.description }}</p>
           <hr />
-          <!-- start, pause, and time -->
+          <!-- Start, pause, and time -->
           <img
             *ngIf="!ci.startOrPause; else pause"
             (click)="startCourseCountDown(ci)"
@@ -172,7 +172,7 @@
     </section>
 
 
-    <!-- course who is found -->
+    <!-- Courses who are found -->
     <section class="row col-12 find" *ngIf="findOrNo">
       <div
         *ngFor="let ci of findCourseList"
@@ -193,7 +193,7 @@
         <div class="card-body">
           <p contenteditable="true">{{ ci.description }}</p>
           <hr />
-          <!-- start, pause, and time -->
+          <!-- Start, pause, and time -->
           <img
             *ngIf="!ci.startOrPause; else pause"
             (click)="startCourseCountDown(ci)"

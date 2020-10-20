@@ -13,7 +13,7 @@ main {
 }
 
 ::placeholder {
-  color: black;
+  color: rgb(66, 64, 64);
   text-align: center;
   font-weight: 400;
 }

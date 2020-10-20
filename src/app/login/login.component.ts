@@ -15,16 +15,16 @@ export class LoginComponent implements OnInit {
   constructor(private _router: Router) { }
 
   ngOnInit(): void {
-    alert("Username: admin \nPassword: admin");
+    
   }
 
-  navigateToHome() {
-    if(this.loginUsername == "admin" && this.loginPassword == "admin") {
-      this._router.navigateByUrl('/home');
-    }
-    else {
-      this.incorrectUsernameOrPass = true;
-    }
-  }
+  // navigateToHome() {
+  //   if(this.loginUsername == "admin" && this.loginPassword == "admin") {
+  //     this._router.navigateByUrl('/home');
+  //   }
+  //   else {
+  //     this.incorrectUsernameOrPass = true;
+  //   }
+  // }
 
 }
